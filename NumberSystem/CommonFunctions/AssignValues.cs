@@ -7,19 +7,19 @@ namespace NumberSystem.Logic
 {
     public class AssignValues
     {
-        public string assignsinglevalue(string FinalValue, string strWorkingNumber)
+        public string Assignsinglevalue(string FinalValue, string strWorkingNumber)
         {
             FinalValue = FinalValue + Constants.NumberSystem.Single[int.Parse(strWorkingNumber)];
             return FinalValue;
         }
 
-        public string assigndoublevalue(string FinalValue, string strWorkingNumber)
+        public string Assigndoublevalue(string FinalValue, string strWorkingNumber)
         {
             FinalValue = FinalValue + Constants.NumberSystem.Double[int.Parse(strWorkingNumber)];
             return FinalValue;
         }
 
-        public string assigncombovalue(string FinalValue, string strWorkingNumber)
+        public string Assigncombovalue(string FinalValue, string strWorkingNumber)
         {
             FinalValue = FinalValue + Constants.NumberSystem.Combo[int.Parse(strWorkingNumber)];
             return FinalValue;

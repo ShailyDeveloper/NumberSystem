@@ -165,6 +165,8 @@
     <Compile Include="CommonFunctions\AssignValues.cs" />
     <Compile Include="CommonFunctions\CheckandSetValues.cs" />
     <Compile Include="Constants\NumberSystem.cs" />
+    <Compile Include="Constants\WesternNumeralSystem.cs" />
+    <Compile Include="DBLayer\DBLogics.cs" />
     <Compile Include="UI\Western.aspx.cs">
       <DependentUpon>Western.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
