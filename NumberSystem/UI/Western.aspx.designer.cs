@@ -49,6 +49,15 @@ namespace NumberSystem {
         protected global::System.Web.UI.WebControls.Button btnSave;
         
         /// <summary>
+        /// lblError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblError;
+        
+        /// <summary>
         /// lblAnswer control.
         /// </summary>
         /// <remarks>
@@ -65,5 +74,14 @@ namespace NumberSystem {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblNumberAnswer;
+        
+        /// <summary>
+        /// hdnfldErrorOutput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnfldErrorOutput;
     }
 }

@@ -18,21 +18,27 @@ namespace NumberSystem
         }
         protected void btnConvert_Click(object sender, EventArgs e)
         {
+            
             lblNumberAnswer.Text = "";
-            lblNumberAnswer.Text = logic.ReturnWordValue(txtNumber.Text);
-            if (lblNumberAnswer.Text != "")
+            lblError.Visible = false;
+            if (hdnfldErrorOutput.Value != "True")
             {
+                lblError.Visible = false;
+                lblNumberAnswer.Text = logic.ReturnWordValue(txtNumber.Text);
                 btnSave.Visible = true;
                 txtNumber.Enabled = false;
                 btnConvert.Enabled = false;
                 lblAnswer.Visible = true;
+                lblNumberAnswer.Visible = true;
             }
             else
             {
+                lblError.Visible = true;
                 btnSave.Visible = false;
                 txtNumber.Enabled = true;
                 btnConvert.Enabled = true;
                 lblAnswer.Visible = false;
+                lblNumberAnswer.Visible = false;
 
             }
         }
