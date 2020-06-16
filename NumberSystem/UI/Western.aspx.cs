@@ -25,7 +25,10 @@ namespace NumberSystem
             try
             {
                 MyLogger.GetInstance().Info("Entering the btnConvert_Click Method");
-                lblNumberAnswer.Text = logic.ReturnWordValue(txtNumber.Text);
+                if (hdnfldErrorOutput.Value != "True")
+                    {
+                        lblNumberAnswer.Text = logic.ReturnWordValue(txtNumber.Text);
+                    }
                 lblError.Visible = false;
                 if (hdnfldErrorOutput.Value != "True" && lblNumberAnswer.Text != "Error in Conversion")
                 {

@@ -12,7 +12,7 @@
         &nbsp;&nbsp;&nbsp;&nbsp;
         <asp:TextBox ID="txtNumber" runat="server" class="txtNum" onkeypress="return allowOnlyNumber(event)"></asp:TextBox>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:Button ID="btnConvert" runat="server" Text="Convert" OnClientClick="return CheckValue()" OnClick="btnConvert_Click" />
+        <asp:Button ID="btnConvert" runat="server" Text="Convert" onClientClick="return CheckValue()"  OnClick="btnConvert_Click" />
         &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID ="btnSave" runat="server" Text ="Save"  visible="false" Width="74px" OnClick="btnSave_Click"/>
         &nbsp;
         <asp:Label ID ="lblError" runat="server" Text="Should be a decimal number with a max digit of 26 before and after the decimal" ForeColor="Red" Visible="false"></asp:Label>
