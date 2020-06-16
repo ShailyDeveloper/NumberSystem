@@ -4,13 +4,13 @@ using NumberSystem.Logic;
 using NumberSystem.Constants;
 using NumberSystem.DBLayer;
 using System.Collections.Generic;
-using NLog;
 using System.Reflection;
 using NumberSystem.CommonFunctions;
+using NumberSystem.Interfaces;
 
 namespace NumberSystem.BusinessLayer
 {
-    public class WesternNumberSystem
+    public class WesternNumberSystem:INumberSystem
     {
         #region Declarations
         int singleIdentifier = 0;
@@ -113,7 +113,7 @@ namespace NumberSystem.BusinessLayer
 
                 }
 
-                if (DecimalValue != "")
+                if (DecimalValue != "" && FinalValue!="Error in Conversion")
                 {
                     FinalValue = FinalValue + " POINT " + DecimalValue;
                 }
@@ -180,7 +180,7 @@ namespace NumberSystem.BusinessLayer
                     }
                     else
                     {
-                        strResult = "Unable to Save Data";
+                        strResult = "Unable to Save the Entered Number "+ strNumber ;
                     }
 
                 }

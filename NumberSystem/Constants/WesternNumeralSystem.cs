@@ -1,6 +1,8 @@
-﻿using System;
+﻿using NumberSystem.CommonFunctions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace NumberSystem.Constants
@@ -9,7 +11,7 @@ namespace NumberSystem.Constants
     {
         public Dictionary<int, string> ReturnNumeralValue()
         {
-            Dictionary<int, string> Western = new Dictionary<int, string>()
+                Dictionary<int, string> Western = new Dictionary<int, string>()
                                             {
                                                 {4," THOUSAND"},
                                                 {5," THOUSAND"},
@@ -35,7 +37,7 @@ namespace NumberSystem.Constants
                                                 {25," OCTILIION"},
                                                 {26," OCTILIION"}
                                             };
-            return Western;
+                return Western;
         }
     }
 }

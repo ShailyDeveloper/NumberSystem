@@ -112,7 +112,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ErrorPage.html" />
     <Content Include="Scripts\Western.js" />
+    <Content Include="UI\ErrorPage.html" />
     <Content Include="UI\Western.aspx" />
     <Content Include="UI\Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -183,6 +185,7 @@
     <Compile Include="Constants\WesternNumeralSystem.cs" />
     <Compile Include="DBLayer\DBLogics.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
+    <Compile Include="Interfaces\INumberSystem.cs" />
     <Compile Include="UI\Western.aspx.cs">
       <DependentUpon>Western.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
