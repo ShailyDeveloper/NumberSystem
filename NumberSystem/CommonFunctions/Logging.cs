@@ -9,9 +9,10 @@ namespace NumberSystem.CommonFunctions
 {
     public class MyLogger : ILogger
     {
+        #region Instance Creation
         private static MyLogger Instance;
         private static Logger Logger;
-
+        
         private MyLogger()
         {
 
@@ -35,7 +36,9 @@ namespace NumberSystem.CommonFunctions
 
             return MyLogger.Logger;
         }
+        #endregion
 
+        #region Method Declaration
         public void Debug(string message, string arg = null)
         {
             if (arg==null)
@@ -83,5 +86,6 @@ namespace NumberSystem.CommonFunctions
                 GetLogger("NumberSystemLogRules").Warn(message, arg);
             }
         }
+        #endregion
     }
 }

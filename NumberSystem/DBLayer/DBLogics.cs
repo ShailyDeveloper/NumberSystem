@@ -10,13 +10,15 @@ namespace NumberSystem.DBLayer
     public class DBLogics
     {
         readonly string strConnection = ConfigurationManager.ConnectionStrings["DBConn_SQL"].ConnectionString;
-       
+        
+        #region Save Data
         public int SaveData(string strNumber , string strNumbertext)
         {
+            SqlConnection sqlCon = new SqlConnection(strConnection);
             try
             {
                 MyLogger.GetInstance().Info("Exiting the SaveData Method");
-                SqlConnection sqlCon = new SqlConnection(strConnection);
+                
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = sqlCon;
                 cmd.CommandText = "INSERT INTO dbo.NumberData(Number,NumberText) VALUES(@param1,@param2)";
@@ -35,18 +37,19 @@ namespace NumberSystem.DBLayer
             }
             catch(Exception Ex)
             {
+                sqlCon.Close();
                 MyLogger.GetInstance().Error("Error at " + MethodBase.GetCurrentMethod() + " with the error message " + Ex.Message);
                 return 0;
             }
             finally
             {
-
+                sqlCon.Close();
                 MyLogger.GetInstance().Info("Exiting the SaveData Method");
             }
 
         }
+        #endregion
 
-        
-            
+
     }
 }

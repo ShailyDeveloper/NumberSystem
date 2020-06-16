@@ -6,6 +6,7 @@ namespace NumberSystem.Logic
 {
     public class AssignValues
     {
+        #region Assign Single Values
         public string Assignsinglevalue(string FinalValue, string strWorkingNumber)
         {
             try
@@ -24,7 +25,9 @@ namespace NumberSystem.Logic
                 MyLogger.GetInstance().Info("Exiting the Assignsinglevalue Method");
             }
         }
+        #endregion
 
+        #region Assign Double Values
         public string Assigndoublevalue(string FinalValue, string strWorkingNumber)
         {
             try
@@ -43,7 +46,9 @@ namespace NumberSystem.Logic
                 MyLogger.GetInstance().Info("Exiting the Assigndoublevalue Method");
             }
         }
+        #endregion
 
+        #region Assign Combo Values
         public string Assigncombovalue(string FinalValue, string strWorkingNumber)
         {
             try
@@ -62,5 +67,6 @@ namespace NumberSystem.Logic
                 MyLogger.GetInstance().Info("Exiting the Assigncombovalue Method");
             }
         }
+        #endregion
     }
 }

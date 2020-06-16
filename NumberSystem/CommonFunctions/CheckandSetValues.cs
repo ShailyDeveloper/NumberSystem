@@ -8,30 +8,36 @@ namespace NumberSystem.Logic
 {
     public class CheckandSetValues
     {
+        #region Instance Creation
         AssignValues assign = new AssignValues();
+        #endregion
 
         #region Check and set the value to hundred
         public Tuple<string, int> CheckHundred(string FinalValue, int hundredIdentifier, string[] strInputnumber, int j)
         {
             try
             {
-                MyLogger.GetInstance().Info("Entering the CheckHundred Method");
-                if (j == hundredIdentifier)
+                if (FinalValue != "Error in Conversion")
                 {
-                    if (strInputnumber[j] != "0")
+                    MyLogger.GetInstance().Info("Entering the CheckHundred Method");
+                    if (j == hundredIdentifier)
                     {
-                        FinalValue = assign.Assignsinglevalue(FinalValue, strInputnumber[j]);
-                        FinalValue = FinalValue + " HUNDRED";
-
-                        if (strInputnumber[j + 1] != "0" || strInputnumber[j + 2] != "0")
+                        if (strInputnumber[j] != "0")
                         {
-                            FinalValue = FinalValue + " AND";
+                            FinalValue = assign.Assignsinglevalue(FinalValue, strInputnumber[j]);
+                            FinalValue = FinalValue + " HUNDRED";
+
+                            if (strInputnumber[j + 1] != "0" || strInputnumber[j + 2] != "0")
+                            {
+                                FinalValue = FinalValue + " AND";
+                            }
                         }
+                        hundredIdentifier = hundredIdentifier + 3;
                     }
-                    hundredIdentifier = hundredIdentifier + 3;
                 }
 
                 return Tuple.Create(FinalValue, hundredIdentifier);
+
             }
             catch(Exception Ex)
             {
@@ -50,19 +56,22 @@ namespace NumberSystem.Logic
         {
             try
             {
-                MyLogger.GetInstance().Info("Entering the CheckTens Method");
-                var tuple = new Tuple<string, int>(FinalValue, Identifier);
-                if (j == Identifier && strInputnumber[j] == "1")
+                if (FinalValue != "Error in Conversion")
                 {
+                    MyLogger.GetInstance().Info("Entering the CheckTens Method");
+                    var tuple = new Tuple<string, int>(FinalValue, Identifier);
+                    if (j == Identifier && strInputnumber[j] == "1")
+                    {
 
-                    FinalValue = assign.Assigncombovalue(FinalValue, strInputnumber[j + 1]);
-                    Identifier = Identifier + 3;
-                }
+                        FinalValue = assign.Assigncombovalue(FinalValue, strInputnumber[j + 1]);
+                        Identifier = Identifier + 3;
+                    }
 
-                else if (j == Identifier && strInputnumber[j] != "1")
-                {
-                    FinalValue = assign.Assigndoublevalue(FinalValue, strInputnumber[j]);
-                    Identifier = Identifier + 3;
+                    else if (j == Identifier && strInputnumber[j] != "1")
+                    {
+                        FinalValue = assign.Assigndoublevalue(FinalValue, strInputnumber[j]);
+                        Identifier = Identifier + 3;
+                    }
                 }
 
                 return Tuple.Create(FinalValue, Identifier);
@@ -84,28 +93,30 @@ namespace NumberSystem.Logic
         {
             try
             {
-                MyLogger.GetInstance().Info("Entering the CheckSingles Method");
-                var tuple = new Tuple<string, int>(FinalValue, Identifier);
-                if (j == Identifier)
+                if (FinalValue != "Error in Conversion")
                 {
-                    if (j != 0 && strInputnumber[j - 1] != "1" && !decimalvalue)
+                    MyLogger.GetInstance().Info("Entering the CheckSingles Method");
+                    var tuple = new Tuple<string, int>(FinalValue, Identifier);
+                    if (j == Identifier)
                     {
-                        FinalValue = FinalValue + Constants.NumberSystem.Single[int.Parse(strInputnumber[j])];
-                    }
-                    else if (j == 0 || decimalvalue)
-                    {
-                        if (int.Parse(strInputnumber[j]) != 0)
+                        if (j != 0 && strInputnumber[j - 1] != "1" && !decimalvalue)
                         {
                             FinalValue = FinalValue + Constants.NumberSystem.Single[int.Parse(strInputnumber[j])];
                         }
-                        else
+                        else if (j == 0 || decimalvalue)
                         {
-                            FinalValue = FinalValue + " ZERO";
+                            if (int.Parse(strInputnumber[j]) != 0)
+                            {
+                                FinalValue = FinalValue + Constants.NumberSystem.Single[int.Parse(strInputnumber[j])];
+                            }
+                            else
+                            {
+                                FinalValue = FinalValue + " ZERO";
+                            }
                         }
                     }
+
                 }
-
-
                 return Tuple.Create(FinalValue, Identifier);
             }
             catch(Exception Ex)
@@ -158,30 +169,33 @@ namespace NumberSystem.Logic
         {
             try
             {
-                MyLogger.GetInstance().Info("Entering the SetValue Method");
-                if (j == Identifier)
+                if (FinalValue != "Error in Conversion")
                 {
-                    string strvalues = "";
-
-                    if (strInputnumber.Length - j > 3)
+                    MyLogger.GetInstance().Info("Entering the SetValue Method");
+                    if (j == Identifier)
                     {
-                        strvalues = NumberSystem[strInputnumber.Length - j];
-                        for (int i = j + 1; strInputnumber.Length - i > 0; i++)
+                        string strvalues = "";
+
+                        if (strInputnumber.Length - j > 3)
                         {
-                            if (strInputnumber[i] != "0")
+                            strvalues = NumberSystem[strInputnumber.Length - j];
+                            for (int i = j + 1; strInputnumber.Length - i > 0; i++)
                             {
-                                strvalues = strvalues + ",";
-                                break;
+                                if (strInputnumber[i] != "0")
+                                {
+                                    strvalues = strvalues + ",";
+                                    break;
+                                }
                             }
                         }
-                    }
-                    if ((strInputnumber[j] == "0" && ((strInputnumber[j - 1] != "0" && j != 0) || (strInputnumber[j - 2] != "0" && j > 1))) || (strInputnumber[j] != "0"))
-                    {
-                        FinalValue = FinalValue + strvalues;
-                    }
+                        if ((strInputnumber[j] == "0" && ((strInputnumber[j - 1] != "0" && j != 0) || (strInputnumber[j - 2] != "0" && j > 1))) || (strInputnumber[j] != "0"))
+                        {
+                            FinalValue = FinalValue + strvalues;
+                        }
 
-                    Identifier = Identifier + 3;
+                        Identifier = Identifier + 3;
 
+                    }
                 }
                 return Tuple.Create<string, int>(FinalValue, Identifier);
             }
