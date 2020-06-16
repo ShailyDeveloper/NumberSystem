@@ -1,7 +1,8 @@
-﻿using System;
+﻿using NumberSystem.CommonFunctions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Reflection;
 
 namespace NumberSystem.Logic
 {
@@ -12,134 +13,213 @@ namespace NumberSystem.Logic
         #region Check and set the value to hundred
         public Tuple<string, int> CheckHundred(string FinalValue, int hundredIdentifier, string[] strInputnumber, int j)
         {
-
-            if (j == hundredIdentifier)
+            try
             {
-                if (strInputnumber[j] != "0")
+                MyLogger.GetInstance().Info("Entering the CheckHundred Method");
+                if (j == hundredIdentifier)
                 {
-                    FinalValue = assign.Assignsinglevalue(FinalValue, strInputnumber[j]);
-                    FinalValue = FinalValue + " HUNDRED";
-
-                    if (strInputnumber[j + 1] != "0" || strInputnumber[j + 2] != "0")
+                    if (strInputnumber[j] != "0")
                     {
-                        FinalValue = FinalValue + " AND";
-                    }
-                }
-                hundredIdentifier = hundredIdentifier + 3;
-            }
+                        FinalValue = assign.Assignsinglevalue(FinalValue, strInputnumber[j]);
+                        FinalValue = FinalValue + " HUNDRED";
 
-            return Tuple.Create(FinalValue, hundredIdentifier);
+                        if (strInputnumber[j + 1] != "0" || strInputnumber[j + 2] != "0")
+                        {
+                            FinalValue = FinalValue + " AND";
+                        }
+                    }
+                    hundredIdentifier = hundredIdentifier + 3;
+                }
+
+                return Tuple.Create(FinalValue, hundredIdentifier);
+            }
+            catch(Exception Ex)
+            {
+                MyLogger.GetInstance().Error("Error at " + MethodBase.GetCurrentMethod() + " with the error message " + Ex.Message);
+                return Tuple.Create("Error in Conversion", hundredIdentifier);
+            }
+            finally
+            {
+                MyLogger.GetInstance().Info("Exiting the CheckHundred Method");
+            }
         }
         #endregion
 
         #region Check and set the value to its relevant 2 digits
         public Tuple<string, int> CheckTens(string FinalValue, int Identifier, string[] strInputnumber, int j)
         {
-            var tuple = new Tuple<string, int>(FinalValue, Identifier);
-            if (j == Identifier && strInputnumber[j] == "1")
+            try
             {
+                MyLogger.GetInstance().Info("Entering the CheckTens Method");
+                var tuple = new Tuple<string, int>(FinalValue, Identifier);
+                if (j == Identifier && strInputnumber[j] == "1")
+                {
 
-                FinalValue = assign.Assigncombovalue(FinalValue, strInputnumber[j + 1]);
-                Identifier = Identifier + 3;
+                    FinalValue = assign.Assigncombovalue(FinalValue, strInputnumber[j + 1]);
+                    Identifier = Identifier + 3;
+                }
+
+                else if (j == Identifier && strInputnumber[j] != "1")
+                {
+                    FinalValue = assign.Assigndoublevalue(FinalValue, strInputnumber[j]);
+                    Identifier = Identifier + 3;
+                }
+
+                return Tuple.Create(FinalValue, Identifier);
             }
-
-            else if (j == Identifier && strInputnumber[j] != "1")
+            catch(Exception Ex)
             {
-                FinalValue = assign.Assigndoublevalue(FinalValue, strInputnumber[j]);
-                Identifier = Identifier + 3;
+                MyLogger.GetInstance().Error("Error at " + MethodBase.GetCurrentMethod() + " with the error message " + Ex.Message);
+                return Tuple.Create("Error in Conversion", Identifier);
             }
-
-            return Tuple.Create(FinalValue, Identifier);
+            finally
+            {
+                MyLogger.GetInstance().Info("Exiting the CheckTens Method");
+            }
         }
         #endregion
 
         #region Check and set the value to its relevant single digit
         public Tuple<string, int> CheckSingles(string FinalValue, int Identifier, string[] strInputnumber, int j,bool decimalvalue)
         {
-            var tuple = new Tuple<string, int>(FinalValue, Identifier);
-            if (j == Identifier)
+            try
             {
-                if (j != 0 && strInputnumber[j - 1] != "1" && !decimalvalue)
+                MyLogger.GetInstance().Info("Entering the CheckSingles Method");
+                var tuple = new Tuple<string, int>(FinalValue, Identifier);
+                if (j == Identifier)
                 {
-                    FinalValue = FinalValue + Constants.NumberSystem.Single[int.Parse(strInputnumber[j])];
-                }
-                else if (j==0 || decimalvalue)
-                {
-                    if (int.Parse(strInputnumber[j]) != 0)
+                    if (j != 0 && strInputnumber[j - 1] != "1" && !decimalvalue)
                     {
                         FinalValue = FinalValue + Constants.NumberSystem.Single[int.Parse(strInputnumber[j])];
                     }
-                    else
+                    else if (j == 0 || decimalvalue)
                     {
-                        FinalValue = FinalValue + " ZERO";
+                        if (int.Parse(strInputnumber[j]) != 0)
+                        {
+                            FinalValue = FinalValue + Constants.NumberSystem.Single[int.Parse(strInputnumber[j])];
+                        }
+                        else
+                        {
+                            FinalValue = FinalValue + " ZERO";
+                        }
                     }
                 }
-            }
-            
 
-            return Tuple.Create(FinalValue, Identifier);
+
+                return Tuple.Create(FinalValue, Identifier);
+            }
+            catch(Exception Ex)
+            {
+                MyLogger.GetInstance().Error("Error at " + MethodBase.GetCurrentMethod() + " with the error message " + Ex.Message);
+                return Tuple.Create("Error in Conversion", Identifier);
+            }
+            finally
+            {
+                MyLogger.GetInstance().Info("Exiting the CheckSingles Method");
+            }
+
         }
         #endregion
 
         #region remove the unwanted zeroes to left side of a number
         public string Removezeroes(string strnumber)
         {
-            for (int i = 0; i < strnumber.Length; i++)
+            try
             {
-                if (strnumber[i].ToString() != "0")
+                MyLogger.GetInstance().Info("Entering the Removezeroes Method");
+                for (int i = 0; i < strnumber.Length; i++)
                 {
-                    break;
+                    if (strnumber[i].ToString() != "0")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        strnumber = strnumber.Remove(i, 1);
+                        i = i - 1;
+                    }
                 }
-                else
-                {
-                    strnumber = strnumber.Remove(i, 1);
-                    i = i - 1;
-                }
+                return strnumber;
             }
-            return strnumber;
+            catch(Exception Ex)
+            {
+                MyLogger.GetInstance().Error("Error at " + MethodBase.GetCurrentMethod() + " with the error message " + Ex.Message);
+                return null;
+            }
+            finally
+            {
+                MyLogger.GetInstance().Info("Exiting the Removezeroes Method");
+            }
         }
         #endregion
 
         #region Check and the set the value of a number as per the numeral system
         public Tuple<string, int> SetValue(string FinalValue, int Identifier, string[] strInputnumber, int j , Dictionary<int,string>NumberSystem)
         {
-            if (j == Identifier)
+            try
             {
-                string strvalues = "";
-
-                if (strInputnumber.Length - j > 3)
+                MyLogger.GetInstance().Info("Entering the SetValue Method");
+                if (j == Identifier)
                 {
-                    strvalues = NumberSystem[strInputnumber.Length - j];
-                    for (int i = j + 1; strInputnumber.Length - i > 0; i++)
+                    string strvalues = "";
+
+                    if (strInputnumber.Length - j > 3)
                     {
-                        if (strInputnumber[i] != "0")
+                        strvalues = NumberSystem[strInputnumber.Length - j];
+                        for (int i = j + 1; strInputnumber.Length - i > 0; i++)
                         {
-                            strvalues = strvalues + ",";
-                            break;
+                            if (strInputnumber[i] != "0")
+                            {
+                                strvalues = strvalues + ",";
+                                break;
+                            }
                         }
                     }
-                }
-                if ((strInputnumber[j] == "0" && ((strInputnumber[j - 1] != "0" && j != 0) || (strInputnumber[j - 2] != "0" && j > 1))) || (strInputnumber[j] != "0"))
-                {
-                    FinalValue = FinalValue + strvalues;
-                }
+                    if ((strInputnumber[j] == "0" && ((strInputnumber[j - 1] != "0" && j != 0) || (strInputnumber[j - 2] != "0" && j > 1))) || (strInputnumber[j] != "0"))
+                    {
+                        FinalValue = FinalValue + strvalues;
+                    }
 
-                Identifier = Identifier + 3;
+                    Identifier = Identifier + 3;
+
+                }
+                return Tuple.Create<string, int>(FinalValue, Identifier);
+            }
+            catch(Exception Ex)
+            {
+                MyLogger.GetInstance().Error("Error at " + MethodBase.GetCurrentMethod() + " with the error message " + Ex.Message);
+                return Tuple.Create<string, int>("Error in Conversion", Identifier);
 
             }
-            return Tuple.Create<string, int>(FinalValue, Identifier);
+            finally
+            {
+                MyLogger.GetInstance().Info("Exiting the SetValue Method");
+            }
         }
         #endregion
 
         #region Converts the number to array
         public string[] ConvertToArray (string strNumber)
         {
-            String[] strOutputValue;
+            try
+            {
+                MyLogger.GetInstance().Info("Entering the ConvertToArray Method");
+                String[] strOutputValue;
 
-            strOutputValue=strNumber.ToCharArray().Select(c => c.ToString()).ToArray();
+                strOutputValue = strNumber.ToCharArray().Select(c => c.ToString()).ToArray();
 
 
-            return strOutputValue;
+                return strOutputValue;
+            }
+            catch(Exception Ex)
+            {
+                MyLogger.GetInstance().Error("Error at " + MethodBase.GetCurrentMethod() + " with the error message " + Ex.Message);
+                return null;
+            }
+            finally
+            {
+                MyLogger.GetInstance().Info("Exiting the ConvertToArray Method");
+            }
         }
         #endregion
 

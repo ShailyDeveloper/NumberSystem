@@ -45,11 +45,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.2\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -125,6 +132,12 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -165,9 +178,11 @@
     <Compile Include="BusinessLayer\WesternNumberSystem.cs" />
     <Compile Include="CommonFunctions\AssignValues.cs" />
     <Compile Include="CommonFunctions\CheckandSetValues.cs" />
+    <Compile Include="CommonFunctions\Logging.cs" />
     <Compile Include="Constants\NumberSystem.cs" />
     <Compile Include="Constants\WesternNumeralSystem.cs" />
     <Compile Include="DBLayer\DBLogics.cs" />
+    <Compile Include="Interfaces\ILogger.cs" />
     <Compile Include="UI\Western.aspx.cs">
       <DependentUpon>Western.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
