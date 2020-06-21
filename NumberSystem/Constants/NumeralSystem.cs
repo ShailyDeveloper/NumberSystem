@@ -7,10 +7,12 @@ using System.Web;
 
 namespace NumberSystem.Constants
 {
-    public class WesternNumeralSystem
+    public class NumeralSystem
     {
-        public Dictionary<int, string> ReturnNumeralValue()
+        public Dictionary<int, string> ReturnNumeralValue(string strNumberSystem)
         {
+            if (strNumberSystem == "Western")
+            {
                 Dictionary<int, string> Western = new Dictionary<int, string>()
                                             {
                                                 {4," THOUSAND"},
@@ -38,6 +40,39 @@ namespace NumberSystem.Constants
                                                 {26," OCTILIION"}
                                             };
                 return Western;
+            }
+
+            if (strNumberSystem == "Indian")
+            {
+                Dictionary<int, string> Indian = new Dictionary<int, string>()
+                                            {
+                                                {4," THOUSAND"},
+                                                {5," THOUSAND"},
+                                                {6," LAKH"},
+                                                {7," LAKHS"},
+                                                {8," CRORE"},
+                                                {9," CRORES"},
+                                                {10," ARAB"},
+                                                {11," ARABS"},
+                                                {12," KHARAB"},
+                                                {13," KHARABS"},
+                                                {14," NEEL"},
+                                                {15," NEELS"},
+                                                {16," PADMA"},
+                                                {17," PADMAS"},
+                                                {18," SHANKA"},
+                                                {19," SHANKAS"},
+                                                {20," UPADH"},
+                                                {21," UPADHS"},
+                                                {22," ANK"},
+                                                {23," ANKS"},
+                                                {24," JALD"},
+                                                {25," MADH"},
+                                                {26," PARAARDHA"}
+                                            };
+                return Indian;
+            }
+            return null;
         }
     }
 }
