@@ -17,6 +17,15 @@
                 <a class="btn btn-default" href="UI/Western">Try Now &raquo;</a>
             </p>
         </div>
+        <div class="col-md-4">
+            <h2>Indian Number System</h2>
+            <p>
+                This page converts the entered number into the Indian Numeral System.
+            </p>
+            <p>
+                <a class="btn btn-default" href="UI/Indian">Try Now &raquo;</a>
+            </p>
+        </div>
         
         <div class="col-md-4">
             <h2>Contact</h2>

@@ -1,17 +1,19 @@
-﻿using System;
-using System.Linq;
-using NumberSystem.Logic;
+﻿using NumberSystem.CommonFunctions;
 using NumberSystem.Constants;
 using NumberSystem.DBLayer;
-using System.Collections.Generic;
-using System.Reflection;
-using NumberSystem.CommonFunctions;
 using NumberSystem.Interfaces;
+using NumberSystem.Logic;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Web;
 
 namespace NumberSystem.BusinessLayer
 {
-    public class WesternNumberSystem:INumberSystem
+    public class IndianNumberSystem : INumberSystem
     {
+
         #region Declarations
         int singleIdentifier = 0;
         int hundredIdentifier = 0;
@@ -44,14 +46,14 @@ namespace NumberSystem.BusinessLayer
 
                 SetValues(strInputnumber.Length);
 
-                Dictionary<int, string> NumeralSystem = num.ReturnNumeralValue("Western");
+                Dictionary<int, string> NumeralSystem = num.ReturnNumeralValue("Indian");
 
                 WorkNumberValue(strInputnumber, strdecimalNumber, NumeralSystem);
 
                 return FinalValue;
 
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 MyLogger.GetInstance().Error("Error at " + MethodBase.GetCurrentMethod() + "/n Value Provided to this method " + strnumber + "with the error message " + Ex.Message);
                 return "Error in Conversion";
@@ -60,12 +62,12 @@ namespace NumberSystem.BusinessLayer
             {
                 MyLogger.GetInstance().Info("Exiting the ReturnWordValue Method");
             }
-            
+
         }
         #endregion
 
         #region Converts the number to text and returns to the parent method
-        public void WorkNumberValue(string[] strInputnumber,string[] strDecimalNumber,Dictionary<int,string> NumberDictionary)
+        public void WorkNumberValue(string[] strInputnumber, string[] strDecimalNumber, Dictionary<int, string> NumberDictionary)
         {
             MyLogger.GetInstance().Info("Entering the WorkNumberValue Method with the input " + "strInputnumber = " + strInputnumber + "and decimal number = " + strDecimalNumber);
             int NumberIndex = 0;
@@ -78,23 +80,34 @@ namespace NumberSystem.BusinessLayer
                 {
 
                     var tuple = new Tuple<string, int>(FinalValue, hundredIdentifier);
-                    tuple = check.CheckHundred(FinalValue, hundredIdentifier, strInputnumber, NumberIndex,"Western");
+                    tuple = check.CheckHundred(FinalValue, hundredIdentifier, strInputnumber, NumberIndex,"Indian");
                     FinalValue = tuple.Item1.ToString();
-                    hundredIdentifier = tuple.Item2;
+                    if (NumberIndex == hundredIdentifier)
+                    {
+                        singleIdentifier = hundredIdentifier + 1;
+                        valueIdentifier = hundredIdentifier + 2;
+                    }
+
+                    
 
                     tuple = new Tuple<string, int>(FinalValue, singleIdentifier);
-                    tuple = check.CheckTens(FinalValue, singleIdentifier, strInputnumber, NumberIndex,"Western");
+                    tuple = check.CheckTens(FinalValue, singleIdentifier, strInputnumber, NumberIndex, "Indian");
                     FinalValue = tuple.Item1;
                     singleIdentifier = tuple.Item2;
+                    
 
                     tuple = new Tuple<string, int>(FinalValue, valueIdentifier);
                     tuple = check.CheckSingles(FinalValue, valueIdentifier, strInputnumber, NumberIndex, false);
                     FinalValue = tuple.Item1;
 
                     tuple = new Tuple<string, int>(FinalValue, valueIdentifier);
-                    tuple = check.SetValue(FinalValue, valueIdentifier, strInputnumber, NumberIndex, NumberDictionary,"Western");
+                    tuple = check.SetValue(FinalValue, valueIdentifier, strInputnumber, NumberIndex, NumberDictionary, "Indian");
                     FinalValue = tuple.Item1;
-                    valueIdentifier = tuple.Item2;
+                    if (valueIdentifier < strInputnumber.Length - 3)
+                    {
+                        valueIdentifier = tuple.Item2;
+                    }
+                    
 
                     NumberIndex = NumberIndex + 1;
                 }
@@ -113,18 +126,18 @@ namespace NumberSystem.BusinessLayer
 
                 }
 
-                if (DecimalValue != "" && FinalValue!="Error in Conversion")
+                if (DecimalValue != "" && FinalValue != "Error in Conversion")
                 {
                     FinalValue = FinalValue + " POINT " + DecimalValue;
                 }
                 MyLogger.GetInstance().Info("Exiting the WorkNumberValue Method");
-        }
-            catch(Exception Ex)
+            }
+            catch (Exception Ex)
             {
                 MyLogger.GetInstance().Error("Error at " + MethodBase.GetCurrentMethod() + " with the error message " + Ex.Message);
                 FinalValue = "Error in Conversion";
             }
-            
+
         }
         #endregion
 
@@ -134,36 +147,32 @@ namespace NumberSystem.BusinessLayer
             MyLogger.GetInstance().Info("Entering the SetValues Method with the array length" + arraylength);
             try
             {
-                if (arraylength % 3 == 2)
+                if ((arraylength-3) % 2 == 1)
                 {
-                    hundredIdentifier = 2;
+                    singleIdentifier = 1;
+                    valueIdentifier = 0;
+                }
+
+                if ((arraylength-3) % 2 == 0)
+                {
+                    singleIdentifier = 0;
                     valueIdentifier = 1;
                 }
 
-                if (arraylength % 3 == 1)
-                {
-                    singleIdentifier = 2;
-                    hundredIdentifier = 1;
-                }
-
-                if (arraylength % 3 == 0)
-                {
-                    singleIdentifier = 1;
-                    valueIdentifier = 2;
-                }
+                hundredIdentifier = arraylength - 3;
                 MyLogger.GetInstance().Info("Exiting the SetValues Method with the array length" + arraylength);
             }
-            
+
             catch (Exception Ex)
             {
                 MyLogger.GetInstance().Error("Error at " + MethodBase.GetCurrentMethod() + " with the error message " + Ex.Message);
             }
-            
+
         }
         #endregion
 
         #region SaveData
-        public string SaveData(string strNumber,string strNumberText)
+        public string SaveData(string strNumber, string strNumberText)
         {
             try
             {
@@ -180,7 +189,7 @@ namespace NumberSystem.BusinessLayer
                     }
                     else
                     {
-                        strResult = "Unable to Save the Entered Number "+ strNumber ;
+                        strResult = "Unable to Save the Entered Number " + strNumber;
                     }
 
                 }

@@ -116,6 +116,7 @@
     <Content Include="ErrorPage.html" />
     <Content Include="Scripts\Western.js" />
     <Content Include="UI\ErrorPage.html" />
+    <Content Include="UI\Indian.aspx" />
     <Content Include="UI\Western.aspx" />
     <Content Include="UI\Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -141,6 +142,8 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\NumberSystem - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -172,21 +175,31 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="BusinessLayer\IndianNumberSystem.cs" />
     <Compile Include="BusinessLayer\WesternNumberSystem.cs" />
     <Compile Include="CommonFunctions\AssignValues.cs" />
     <Compile Include="CommonFunctions\CheckandSetValues.cs" />
     <Compile Include="CommonFunctions\Logging.cs" />
     <Compile Include="Constants\NumberSystem.cs" />
-    <Compile Include="Constants\WesternNumeralSystem.cs" />
+    <Compile Include="Constants\NumeralSystem.cs" />
     <Compile Include="DBLayer\DBLogics.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
     <Compile Include="Interfaces\INumberSystem.cs" />
+    <Compile Include="UI\Indian.aspx.cs">
+      <DependentUpon>Indian.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\Indian.aspx.designer.cs">
+      <DependentUpon>Indian.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UI\Western.aspx.cs">
       <DependentUpon>Western.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

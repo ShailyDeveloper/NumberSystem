@@ -13,7 +13,7 @@ namespace NumberSystem.Logic
         #endregion
 
         #region Check and set the value to hundred
-        public Tuple<string, int> CheckHundred(string FinalValue, int hundredIdentifier, string[] strInputnumber, int j)
+        public Tuple<string, int> CheckHundred(string FinalValue, int hundredIdentifier, string[] strInputnumber, int j,string strNumeralSystem)
         {
             try
             {
@@ -32,7 +32,9 @@ namespace NumberSystem.Logic
                                 FinalValue = FinalValue + " AND";
                             }
                         }
-                        hundredIdentifier = hundredIdentifier + 3;
+
+                        hundredIdentifier = SetIDentifier(hundredIdentifier, strNumeralSystem);
+                        
                     }
                 }
 
@@ -52,7 +54,7 @@ namespace NumberSystem.Logic
         #endregion
 
         #region Check and set the value to its relevant 2 digits
-        public Tuple<string, int> CheckTens(string FinalValue, int Identifier, string[] strInputnumber, int j)
+        public Tuple<string, int> CheckTens(string FinalValue, int Identifier, string[] strInputnumber, int j, string strNumeralSystem)
         {
             try
             {
@@ -64,13 +66,14 @@ namespace NumberSystem.Logic
                     {
 
                         FinalValue = assign.Assigncombovalue(FinalValue, strInputnumber[j + 1]);
-                        Identifier = Identifier + 3;
+                        Identifier = SetIDentifier(Identifier, strNumeralSystem);
                     }
 
                     else if (j == Identifier && strInputnumber[j] != "1")
                     {
                         FinalValue = assign.Assigndoublevalue(FinalValue, strInputnumber[j]);
-                        Identifier = Identifier + 3;
+                        Identifier = SetIDentifier(Identifier, strNumeralSystem);
+
                     }
                 }
 
@@ -165,7 +168,7 @@ namespace NumberSystem.Logic
         #endregion
 
         #region Check and the set the value of a number as per the numeral system
-        public Tuple<string, int> SetValue(string FinalValue, int Identifier, string[] strInputnumber, int j , Dictionary<int,string>NumberSystem)
+        public Tuple<string, int> SetValue(string FinalValue, int Identifier, string[] strInputnumber, int j , Dictionary<int,string>NumberSystem,string strNumeralSystem)
         {
             try
             {
@@ -193,7 +196,7 @@ namespace NumberSystem.Logic
                             FinalValue = FinalValue + strvalues;
                         }
 
-                        Identifier = Identifier + 3;
+                        Identifier = SetIDentifier(Identifier, strNumeralSystem);
 
                     }
                 }
@@ -237,6 +240,38 @@ namespace NumberSystem.Logic
         }
         #endregion
 
+        #region Converts the number to array
+        public int SetIDentifier(int intIdentifier, string strNumeralSystem)
+        {
+            try
+            {
+                MyLogger.GetInstance().Info("Entering the ConvertToArray Method");
+
+                switch (strNumeralSystem)
+                {
+                    case "Western":
+                        intIdentifier = intIdentifier + 3;
+                        break;
+
+                    case "Indian":
+                        intIdentifier = intIdentifier + 2;
+                        break;
+                }
+
+
+                return intIdentifier;
+            }
+            catch (Exception Ex)
+            {
+                MyLogger.GetInstance().Error("Error at " + MethodBase.GetCurrentMethod() + " with the error message " + Ex.Message);
+                return intIdentifier;
+            }
+            finally
+            {
+                MyLogger.GetInstance().Info("Exiting the ConvertToArray Method");
+            }
+        }
+        #endregion
 
 
     }
